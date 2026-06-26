@@ -7,6 +7,7 @@
 #include <vector>
 #include <string_view>
 #include <string>
+#include <fstream>
 
 class Interpreter {
 public:
@@ -92,7 +93,20 @@ public:
 
 int main (int argc, char *argv[]) {
     Interpreter interpreter {};
+
+    if (argc < 2) {
     // for(const char &c :interpreter.VALID_BF_CHARS) std::cout << c <<'\n';
-    interpreter.run("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>+.");
+    interpreter.run("++++++++++[>+++++++>++++++++++>+++<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.");
+        return 0;
+    }
+    std::ifstream source_file(argv[1]);
+    std::string code = "";
+    std::string line;
+    while (getline(source_file, line)) {
+        code += line;
+    }
+    interpreter.run(code);
+
+    source_file.close();
     return 0;
 }
