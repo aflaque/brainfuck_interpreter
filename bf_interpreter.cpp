@@ -2,6 +2,7 @@
 #include <ranges>
 #include <iostream>
 #include <set>
+#include <source_location>
 #include <stack>
 #include <stdexcept>
 #include <vector>
@@ -95,11 +96,16 @@ int main (int argc, char *argv[]) {
     Interpreter interpreter {};
 
     if (argc < 2) {
-    // for(const char &c :interpreter.VALID_BF_CHARS) std::cout << c <<'\n';
-    interpreter.run("++++++++++[>+++++++>++++++++++>+++<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.");
+        interpreter.run("++++++++++[>+++++++>++++++++++>+++<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.");
+        std::cout << '\n' << "enter a brainfuck file the second postional argument" << '\n';
         return 0;
     }
     std::ifstream source_file(argv[1]);
+    if (!source_file) {
+        throw std::invalid_argument("the file you asked for does not exist");
+        std::cout << '\n';
+        return 0;
+    }
     std::string code = "";
     std::string line;
     while (getline(source_file, line)) {
