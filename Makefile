@@ -1,4 +1,4 @@
-CC = g++-14
+CC = clang++
 CFLAGS = -Wall -Wextra
 
 all: inter.out
